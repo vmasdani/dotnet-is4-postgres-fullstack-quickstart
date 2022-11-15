@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  is4admin:
+    image: dotnetis4admin
+    restart: unless-stopped
+    ports:
+      - "#{is4_admin_port}:80"
+
+  is4sts:
+    image: dotnetis4sts
+    restart: unless-stopped
+    ports:
+      - "#{is4_sts_port}:80"
+
+  app:
+    image: dotnetapp
+    restart: unless-stopped
+    ports:
+      - "#{app_port}:80"
+
+  postgres:
+    image: postgres:14.5-alpine3.16
+    restart: unless-stopped
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=dotnetproject"
+    volumes:
+      - "./db/postgres:/var/lib/postgresql/data"
+    ports:
+      - "#{postgres_port}:5432"
+
+  phppgadmin:
+    image: bitnami/phppgadmin:7.13.0-debian-10-r402
+    restart: unless-stopped
+    environment:
+      - "DATABASE_HOST=172.17.0.1"
+      - "DATABASE_PORT_NUMBER=#{postgres_port}"
+    ports:
+      - "#{phppgadmin_port}:8080"
