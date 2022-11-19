@@ -15,6 +15,13 @@ app_config_file.close()
 
 print(app_config_file_contents)
 
+# Generate proto
+print('Generating proto cs...')
+subprocess.run(
+    './protoc -I=./protos --csharp_out=./backend ./protos/*.proto', cwd='.', shell=True)
+print('Generating proto ts...')
+subprocess.run('./protoc --plugin=./frontend/node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./frontend/src --ts_proto_opt=esModuleInterop=true ./protos/*.proto', cwd='.', shell=True)
+
 
 def process_template(src: str, dst: str):
     template_file = open(src)
@@ -42,7 +49,10 @@ process_template('./templates/appsettings-sts-template.json',
                  './IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.STS.Identity/appsettings.json')
 process_template('./templates/identitydata-template.json',
                  './IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.Admin/identitydata.json')
-
+process_template('./templates/appsettings-identityserverdata-template.json',
+                 './IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.Admin/identityserverdata.json')
+process_template('./templates/appsettings-app.json',
+                 './backend/appsettings.json')
 
 steps = [
     ('docker build -f Dockerfile.is4admin -t dotnetis4admin .', '.'),

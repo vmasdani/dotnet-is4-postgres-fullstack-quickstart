@@ -5,9 +5,20 @@ Full stack .NET 6 PostgreSQL backend with identity server 4 + is4 Skoruba admin.
 ### Prerequisites
 
 1. Docker
-2. Linux OS
+2. Linux OS x64
+3. Yarn
 
 ### Running
+
+1. Run frontend dist with yarn
+
+```
+cd frontend
+yarn install
+cd ..
+```
+
+2. Run
 
 ```sh
 ./manage.sh run dev
@@ -19,6 +30,10 @@ Full stack .NET 6 PostgreSQL backend with identity server 4 + is4 Skoruba admin.
 ./venv/bin/python3 manage.py build prod
 ./venv/bin/python3 manage.py push prod
 ```
+
+Just open `http://localhost:2020` and enter the admin username/password in `config.yml`.
+
+Add user, then login in `http://localhost:2022`.
 
 ### Configuration
 
@@ -47,10 +62,10 @@ Server=localhost; User Id=postgres; Database=is4admin; Port=5432; Password=postg
 ```
 
 2. Added timezone options for postgres in main func
+
 - `IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.Admin/Program.cs`
 - `IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.Admin.Api/Program.cs`
 - `IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.STS.Identity/Program.cs`
-
 
 ```cs
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -58,6 +73,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 - Added `password` grant type
 - `IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.Admin/identityserverdata.json`
+
 ```json
 "Clients": [
     {

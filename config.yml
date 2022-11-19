@@ -1,26 +1,58 @@
 env:
   dev:
+    # Ports
     is4_admin_port: 2020
     is4_sts_port: 2021
     app_port: 2022
     postgres_port: 2023
     phppgadmin_port: 2024
+
+    # Postgres
+    postgres_user: postgres
+    postgres_password: postgres
+
+    # IS4 URL
     identity_admin_base_url: http://172.17.0.1:2020
-    identity_admin_redirect_uri: http://localhost:2020/signin-oidc
     identity_server_base_url: http://172.17.0.1:2021
+    identity_admin_redirect_uri: http://localhost:2020/signin-oidc
+    
+    # IS4 creds
     admin_username: admin
     admin_password: Mypa$$word123
+    
+    # IS4 client credentials
+    skoruba_client_id: skoruba_identity_admin
+    skoruba_client_secret: skoruba_admin_client_secret
+    
+    # App postgres URL
     db_connection_string: Server=172.17.0.1; User Id=postgres; Database=is4admin; Port=2023; Password=postgres; SSL Mode=Prefer; Trust Server Certificate=true
+    host_url: 172.17.0.1
 
   prod:
+    # Ports
     is4_admin_port: 2020
     is4_sts_port: 2021
     app_port: 2022
     postgres_port: 2023
     phppgadmin_port: 2024
+
+    # Postgres
+    postgres_user: postgres
+    postgres_password: postgres
+    
+    # IS4 URL
     identity_admin_base_url: http://172.17.0.1:2020
-    identity_admin_redirect_uri: https://is4admin.mydomain.com/signin-oidc
     identity_server_base_url: http://172.17.0.1:2021
+    identity_admin_redirect_uri: https://is4admin.mydomain.com/signin-oidc
+    
+    # IS4 creds
     admin_username: admin
     admin_password: Mypa$$word123
+
+    # IS4 client credentials
+    skoruba_client_id: skoruba_identity_admin
+    skoruba_client_secret: skoruba_admin_client_secret
+    
+    # App postgres URL
     db_connection_string: Server=172.17.0.1; User Id=postgres; Database=is4admin; Port=2023; Password=postgres; SSL Mode=Prefer; Trust Server Certificate=true
+    host_url: 172.17.0.1

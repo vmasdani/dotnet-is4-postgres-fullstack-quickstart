@@ -7,7 +7,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "bootstrap": "^5.2.2",
     "color-hash": "^2.0.1",
+    "ts-proto": "^1.132.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },

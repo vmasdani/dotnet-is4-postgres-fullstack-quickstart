@@ -34,7 +34,7 @@ services:
     image: bitnami/phppgadmin:7.13.0-debian-10-r402
     restart: unless-stopped
     environment:
-      - "DATABASE_HOST=172.17.0.1"
+      - "DATABASE_HOST=#{host_url}"
       - "DATABASE_PORT_NUMBER=#{postgres_port}"
     ports:
       - "#{phppgadmin_port}:8080"

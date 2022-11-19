@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+message ISLoginError {
+    optional string error_description = 1;
+}
+
+message ISTokenEndpointReturn { 
+    optional string access_token = 1;
+    optional int64 expires_in = 2;
+    optional string token_type = 3;
+    optional string scope = 4;
+}
+
+message ISUserInfoRequest {
+     optional string token = 1;
+}
+
+message ISUserInfoResponse {
+}
+
