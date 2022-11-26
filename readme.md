@@ -10,30 +10,17 @@ Full stack .NET 6 PostgreSQL backend with identity server 4 + is4 Skoruba admin.
 
 ### Running
 
-1. Run frontend dist with yarn
-
-```
-cd frontend
-yarn install
-cd ..
-```
-
-2. Run
+1. Run
 
 ```sh
-./manage.sh run dev
-./manage.sh build prod
-./manage.sh push prod
-
-# Or full path using python venv
-./venv/bin/python3 manage.py run dev
-./venv/bin/python3 manage.py build prod
-./venv/bin/python3 manage.py push prod
+./manage.py run dev
+./manage.py build prod
+./manage.py push prod
 ```
 
 Just open `http://localhost:2020` and enter the admin username/password in `config.yml`.
 
-Add user, then login in `http://localhost:2022`.
+Add user, then login in `http://172.17.0.1:2022`.
 
 ### Configuration
 

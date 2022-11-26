@@ -3,6 +3,7 @@ env:
     # Ports
     is4_admin_port: 2020
     is4_sts_port: 2021
+    is4_api_port: 2025
     app_port: 2022
     postgres_port: 2023
     phppgadmin_port: 2024
@@ -14,6 +15,7 @@ env:
     # IS4 URL
     identity_admin_base_url: http://172.17.0.1:2020
     identity_server_base_url: http://172.17.0.1:2021
+    identity_server_api_url: http://172.17.0.1:2025
     identity_admin_redirect_uri: http://localhost:2020/signin-oidc
     
     # IS4 creds
@@ -32,6 +34,7 @@ env:
     # Ports
     is4_admin_port: 2020
     is4_sts_port: 2021
+    is4_api_port: 2025
     app_port: 2022
     postgres_port: 2023
     phppgadmin_port: 2024
@@ -43,6 +46,7 @@ env:
     # IS4 URL
     identity_admin_base_url: http://172.17.0.1:2020
     identity_server_base_url: http://172.17.0.1:2021
+    identity_server_api_url: http://172.17.0.1:2025
     identity_admin_redirect_uri: https://is4admin.mydomain.com/signin-oidc
     
     # IS4 creds

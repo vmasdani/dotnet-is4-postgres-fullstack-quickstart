@@ -1,3 +1,5 @@
+#!./venv/bin/python3
+
 import subprocess
 import yaml
 import argparse
@@ -51,13 +53,21 @@ process_template('./templates/identitydata-template.json',
                  './IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.Admin/identitydata.json')
 process_template('./templates/appsettings-identityserverdata-template.json',
                  './IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.Admin/identityserverdata.json')
+process_template('./templates/appsettings-admin-api-template.json',
+                 './IdentityServer4.Admin-release-2.1.0/src/Skoruba.IdentityServer4.Admin.Api/appsettings.json')
+
+process_template('./templates/appsettings-app.json',
+                 './backend/appsettings.json')
 process_template('./templates/appsettings-app.json',
                  './backend/appsettings.json')
 
 steps = [
     ('docker build -f Dockerfile.is4admin -t dotnetis4admin .', '.'),
     ('docker build -f Dockerfile.is4sts -t dotnetis4sts .', '.'),
+    ('docker build -f Dockerfile.is4api -t dotnetis4api .', '.'),
+    
     ('docker build -f Dockerfile.app -t dotnetapp .', '.'),
+
     ('docker compose up', '.'),
 ]
 

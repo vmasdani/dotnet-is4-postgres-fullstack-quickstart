@@ -84,12 +84,12 @@
           "https://localhost:44303/signout-callback-oidc"
         ],
         "AllowedCorsOrigins": ["https://localhost:44303"],
-        "AllowedScopes": ["openid", "email", "profile", "roles"]
+        "AllowedScopes": ["openid", "email", "profile", "roles", "skoruba_identity_admin_api"]
       },
       {
         "ClientId": "skoruba_identity_admin_api_swaggerui",
         "ClientName": "skoruba_identity_admin_api_swaggerui",
-        "AllowedGrantTypes": ["authorization_code"],
+        "AllowedGrantTypes": ["authorization_code", "password"],
         "RequireClientSecret": false,
         "RequirePkce": true,
         "RedirectUris": [
