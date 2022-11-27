@@ -10,7 +10,7 @@ env:
 
     # Postgres
     postgres_user: postgres
-    postgres_password: postgres
+    postgres_password: postgres 
 
     # IS4 URL
     identity_admin_base_url: http://172.17.0.1:2020

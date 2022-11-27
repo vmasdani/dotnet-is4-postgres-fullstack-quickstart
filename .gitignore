@@ -3,3 +3,4 @@ docker-compose.yml
 
 # Python gitignore
 __pycache__/
+config.yml

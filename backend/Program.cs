@@ -2,8 +2,13 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Google.Protobuf;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApplicationContext>(o =>
+{
+    o.UseNpgsql(builder.Configuration.GetConnectionString("PostgresUrl"));
+});
 
 var app = builder.Build();
 
@@ -12,6 +17,33 @@ app.UseStaticFiles();
 
 Console.WriteLine("get postgres url");
 Console.WriteLine(builder.Configuration.GetConnectionString("PostgresUrl"));
+
+new ApplicationContext(builder).Setup( c =>
+{
+    Console.WriteLine("Migrating....");
+    c.Database.Migrate();
+
+    // Test startup
+        Console.WriteLine("Adding record....");
+    var r1 = new Record();
+    var r2 = new Record();
+
+    c.Update(r1);
+    c.Update(r2);
+
+    c.SaveChanges();
+
+    Console.WriteLine(JsonSerializer.Serialize(r1));
+    Console.WriteLine(JsonSerializer.Serialize(r2));
+
+    Thread.Sleep(1000);
+
+    r1.Deleted = DateTime.UtcNow;
+    c.Update(r1); 
+    c.SaveChanges();
+
+    Console.WriteLine(JsonSerializer.Serialize(r1));
+});
 
 app.MapPost("/userinfo", async (HttpRequest r) =>
 {
@@ -32,6 +64,35 @@ app.MapPost("/userinfo", async (HttpRequest r) =>
 
     return Results.Text(await res.Content.ReadAsStringAsync(), contentType: "application/json");
 
+});
+
+app.MapGet("/users", async (HttpRequest r) =>
+{
+    try
+    {
+        Console.WriteLine($"Getting {$"http://{builder.Configuration.GetConnectionString("HostUrl")}:{builder.Configuration.GetConnectionString("IdentityApiPort")}/api/Users"}, {(string?)r.Headers["Authorization"]}");
+        var res = await new HttpClient().Setup(c =>
+            {
+                c.DefaultRequestHeaders.Add("Authorization", (string?)r.Headers["Authorization"]);
+            }).GetAsync(
+                $"http://{builder.Configuration.GetConnectionString("HostUrl")}:{builder.Configuration.GetConnectionString("IdentityApiPort")}/api/Users"
+            );
+
+        if (res.StatusCode != HttpStatusCode.OK)
+        {
+            Console.WriteLine((await res.Content.ReadAsStringAsync()));
+            throw new Exception(await res.Content.ReadAsStringAsync());
+        }
+
+        return Results.Text(
+            await res.Content.ReadAsStringAsync(),
+            contentType: "application/json"
+         );
+    }
+    catch (Exception e)
+    {
+        return Results.Problem($"{e}");
+    }
 });
 
 app.MapPost("/login", async (LoginBody body) =>
@@ -63,8 +124,6 @@ app.MapPost("/login", async (LoginBody body) =>
             ));
         }
 
-
-
         var endpointReturn = new JsonParser(
             JsonParser.Settings.Default.WithIgnoreUnknownFields(true)
         ).Parse<ISTokenEndpointReturn>(await res.Content.ReadAsStringAsync());
@@ -86,3 +145,4 @@ app.MapPost("/login", async (LoginBody body) =>
 });
 
 app.Run();
+

@@ -10,7 +10,15 @@ Full stack .NET 6 PostgreSQL backend with identity server 4 + is4 Skoruba admin.
 
 ### Running
 
-1. Run
+1. Run in frontend (for proto)
+
+```
+cd frontend
+yarn install
+```
+
+2. Copy `config.example.yml` to `config.yml`.
+3. Run
 
 ```sh
 ./manage.py run dev
@@ -18,9 +26,12 @@ Full stack .NET 6 PostgreSQL backend with identity server 4 + is4 Skoruba admin.
 ./manage.py push prod
 ```
 
-Just open `http://localhost:2020` and enter the admin username/password in `config.yml`.
+Just open `http://172.17.0.1:2020` and enter the admin username/password in `config.yml`.
+Add user, then login in `http://172.17.0.1:2022`.  
+You can access swagger on `http://172.17.0.1:2025/swagger`.  
+You might need to add client Redirect URI and CORS in PhpPgAdmin `http://172.17.0.1:2024`:
 
-Add user, then login in `http://172.17.0.1:2022`.
+<!-- - ClientRedirectUri: -->
 
 ### Configuration
 
