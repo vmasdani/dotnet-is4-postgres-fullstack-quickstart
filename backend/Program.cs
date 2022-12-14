@@ -18,13 +18,13 @@ app.UseStaticFiles();
 Console.WriteLine("get postgres url");
 Console.WriteLine(builder.Configuration.GetConnectionString("PostgresUrl"));
 
-new ApplicationContext(builder).Setup( c =>
+new ApplicationContext(builder).Setup(c =>
 {
     Console.WriteLine("Migrating....");
     c.Database.Migrate();
 
     // Test startup
-        Console.WriteLine("Adding record....");
+    Console.WriteLine("Adding record....");
     var r1 = new Record();
     var r2 = new Record();
 
@@ -39,7 +39,7 @@ new ApplicationContext(builder).Setup( c =>
     Thread.Sleep(1000);
 
     r1.Deleted = DateTime.UtcNow;
-    c.Update(r1); 
+    c.Update(r1);
     c.SaveChanges();
 
     Console.WriteLine(JsonSerializer.Serialize(r1));
@@ -75,7 +75,7 @@ app.MapGet("/users", async (HttpRequest r) =>
             {
                 c.DefaultRequestHeaders.Add("Authorization", (string?)r.Headers["Authorization"]);
             }).GetAsync(
-                $"http://{builder.Configuration.GetConnectionString("HostUrl")}:{builder.Configuration.GetConnectionString("IdentityApiPort")}/api/Users"
+                $"http://{builder.Configuration.GetConnectionString("HostUrl")}:{builder.Configuration.GetConnectionString("IdentityApiPort")}/api/Users?pageSize={int.MaxValue}"
             );
 
         if (res.StatusCode != HttpStatusCode.OK)
