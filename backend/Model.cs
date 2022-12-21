@@ -4,8 +4,20 @@ public class BaseModel
 {
     public int Id { get; set; }
 
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public DateTime? Created { get; set; } = DateTime.UtcNow;
+    public DateTime? created { get; set; }
+    public DateTime? Created
+    {
+        get
+        {
+            if (created == null)
+            {
+                created = DateTime.UtcNow;
+            }
+            return created.Value;
+        }
+        private set { created = value; }
+    }
+    public DateTime? Updated { get; set; } = DateTime.UtcNow;
     public DateTime? Deleted { get; set; }
 }
 
