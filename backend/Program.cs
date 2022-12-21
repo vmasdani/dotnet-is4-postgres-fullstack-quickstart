@@ -18,32 +18,32 @@ app.UseStaticFiles();
 Console.WriteLine("get postgres url");
 Console.WriteLine(builder.Configuration.GetConnectionString("PostgresUrl"));
 
-new ApplicationContext(builder).Setup(c =>
-{
-    Console.WriteLine("Migrating....");
-    c.Database.Migrate();
+var c = app.Services.GetRequiredService<ApplicationContext>();
+app.Services.GetRequiredService<ApplicationContext>().Database.Migrate();
 
-    // Test startup
-    Console.WriteLine("Adding record....");
-    var r1 = new Record();
-    var r2 = new Record();
+Console.WriteLine("Migrating....");
+c.Database.Migrate();
 
-    c.Update(r1);
-    c.Update(r2);
+// Test startup
+Console.WriteLine("Adding record....");
+var r1 = new Record();
+var r2 = new Record();
 
-    c.SaveChanges();
+c.Update(r1);
+c.Update(r2);
 
-    Console.WriteLine(JsonSerializer.Serialize(r1));
-    Console.WriteLine(JsonSerializer.Serialize(r2));
+c.SaveChanges();
 
-    Thread.Sleep(1000);
+Console.WriteLine(JsonSerializer.Serialize(r1));
+Console.WriteLine(JsonSerializer.Serialize(r2));
 
-    r1.Deleted = DateTime.UtcNow;
-    c.Update(r1);
-    c.SaveChanges();
+Thread.Sleep(1000);
 
-    Console.WriteLine(JsonSerializer.Serialize(r1));
-});
+r1.Deleted = DateTime.UtcNow;
+c.Update(r1);
+c.SaveChanges();
+
+Console.WriteLine(JsonSerializer.Serialize(r1));
 
 app.MapPost("/userinfo", async (HttpRequest r) =>
 {
