@@ -79,8 +79,8 @@
           }
         ],
         "RedirectUris": [
-          "http://172.17.0.1:2020/signin-oidc",
-          "http://172.17.0.1:2025/swagger/oauth2-redirect.html"
+          "https://is4admin.storage.vmasdani.my.id/signin-oidc",
+          "disable swagger for prod"
         ],
         "FrontChannelLogoutUri": "http://172.17.0.1:2020/signout-oidc",
         "PostLogoutRedirectUris": [

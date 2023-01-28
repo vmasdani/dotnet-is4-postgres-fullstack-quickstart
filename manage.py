@@ -61,15 +61,30 @@ process_template('./templates/appsettings-app.json',
 process_template('./templates/appsettings-app.json',
                  './backend/appsettings.json')
 
-steps = [
-    ('docker build -f Dockerfile.is4admin -t dotnetis4admin .', '.'),
-    ('docker build -f Dockerfile.is4sts -t dotnetis4sts .', '.'),
-    ('docker build -f Dockerfile.is4api -t dotnetis4api .', '.'),
-    
-    ('docker build -f Dockerfile.app -t dotnetapp .', '.'),
+if args.action == 'run':
+    steps = [
+        ('docker build -f Dockerfile.is4admin -t dotnetis4admin .', '.'),
+        ('docker build -f Dockerfile.is4sts -t dotnetis4sts .', '.'),
+        ('docker build -f Dockerfile.is4api -t dotnetis4api .', '.'),
+        
+        ('docker build -f Dockerfile.app -t dotnetapp .', '.'),
+    ]
 
-    ('docker compose up', '.'),
-]
+    for (s, cwd) in steps:
+        subprocess.run(s, cwd=cwd, shell=True)
 
-for (s, cwd) in steps:
-    subprocess.run(s, cwd=cwd, shell=True)
+elif args.action == 'build':
+    steps = [
+        (f'docker build -f Dockerfile.is4admin -t {app_config["env"][args.env]["registry_url"]}/dotnetis4admin .', '.'),
+        (f'docker build -f Dockerfile.is4sts -t {app_config["env"][args.env]["registry_url"]}/dotnetis4sts .', '.'),
+        (f'docker build -f Dockerfile.is4api -t {app_config["env"][args.env]["registry_url"]}/dotnetis4api .', '.'),
+        (f'docker build -f Dockerfile.app -t {app_config["env"][args.env]["registry_url"]}/dotnetapp .', '.'),
+
+        (f'docker push {app_config["env"][args.env]["registry_url"]}/dotnetis4admin', '.'),
+        (f'docker push {app_config["env"][args.env]["registry_url"]}/dotnetis4sts', '.'),
+        (f'docker push {app_config["env"][args.env]["registry_url"]}/dotnetis4api', '.'),
+        (f'docker push {app_config["env"][args.env]["registry_url"]}/dotnetapp', '.'),  
+    ]
+
+    for (s, cwd) in steps:
+        subprocess.run(s, cwd=cwd, shell=True)

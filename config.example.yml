@@ -16,8 +16,7 @@ env:
     identity_admin_base_url: http://172.17.0.1:2020
     identity_server_base_url: http://172.17.0.1:2021
     identity_server_api_url: http://172.17.0.1:2025
-    identity_admin_redirect_uri: http://172.17.0.1:2020/signin-oidc
-    identity_admin_oauth2_swagger_redirect_uri: http://172.17.0.1:2025/swagger/oauth2-redirect.html
+    
 
     # IS4 creds
     admin_username: admin
@@ -29,6 +28,11 @@ env:
 
     # App postgres URL
     host_url: 172.17.0.1
+
+    # Quickload
+    registry_url: https://my_docker_registry_url
+    identity_admin_redirect_uri: http://172.17.0.1:2020/signin-oidc
+    identity_admin_oauth2_swagger_redirect_uri: http://172.17.0.1:2025/swagger/oauth2-redirect.html
 
   prod:
     # Ports
@@ -47,8 +51,7 @@ env:
     identity_admin_base_url: http://172.17.0.1:2020
     identity_server_base_url: http://172.17.0.1:2021
     identity_server_api_url: http://172.17.0.1:2025
-    identity_admin_redirect_uri: https://is4admin.mydomain.com/signin-oidc
-    identity_admin_oauth2_swagger_redirect_uri: 'disable swagger for prod'
+   
 
     # IS4 creds
     admin_username: admin
@@ -60,3 +63,8 @@ env:
 
     # App postgres URL
     host_url: 172.17.0.1
+
+    # Quickload
+    registry_url: my_docker_registry_url
+    identity_admin_redirect_uri: https://is4admin.mydomain.com/signin-oidc
+    identity_admin_oauth2_swagger_redirect_uri: 'disable swagger for prod'
